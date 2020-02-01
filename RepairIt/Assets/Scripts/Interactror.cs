@@ -39,6 +39,11 @@ public class Interactror : MonoBehaviour
                 _anim.SetTrigger("Pickup");
             }
         }
+
+        RaycastWhiskers(true, Hands.position,
+            Quaternion.AngleAxis(minWhiskerAngle, Hands.right) * Hands.forward * MAX_RAYCAST_DISTANCE,
+            Quaternion.AngleAxis(maxWhiskerAngle, Hands.right) * Hands.forward * MAX_RAYCAST_DISTANCE,
+            whiskerNumber);
     }
 
     void TryInteract()
@@ -47,7 +52,7 @@ public class Interactror : MonoBehaviour
         bool foundContainer = false;
         GameObject foundInteractee = null;
 
-        var hits = RaycastWhiskers(Hands.position,
+        var hits = RaycastWhiskers(false, Hands.position,
             Quaternion.AngleAxis(minWhiskerAngle, Hands.right) * Hands.forward * MAX_RAYCAST_DISTANCE,
             Quaternion.AngleAxis(maxWhiskerAngle, Hands.right) * Hands.forward * MAX_RAYCAST_DISTANCE,
             whiskerNumber);
@@ -107,7 +112,7 @@ public class Interactror : MonoBehaviour
         }
     }
 
-    public IEnumerable<RaycastHit> RaycastWhiskers(Vector3 position, Vector3 fromDirection, Vector3 toDirection, int number)
+    public IEnumerable<RaycastHit> RaycastWhiskers(bool drawOnly, Vector3 position, Vector3 fromDirection, Vector3 toDirection, int number)
     {
         List<RaycastHit> hits = new List<RaycastHit>();
 
@@ -121,10 +126,27 @@ public class Interactror : MonoBehaviour
                 Color.Lerp(Color.red, Color.white, progress),
                 1, // 1 second display for debugging
                 false);
-            var hit = Physics.RaycastAll(position, direction, direction.magnitude).OrderBy(x => x.distance);
-            hits.AddRange(hit);
+            if (!drawOnly)
+            {
+                var hit = Physics.RaycastAll(position, direction, direction.magnitude).OrderBy(x => x.distance);
+                hits.AddRange(hit);
+            }
+
         }
 
-        return hits;
+        return hits.Distinct(new DistinctRaycastHitComparer());
+    }
+
+    class DistinctRaycastHitComparer : IEqualityComparer<RaycastHit>
+    {
+        public bool Equals(RaycastHit x, RaycastHit y)
+        {
+            return x.transform == y.transform;
+        }
+
+        public int GetHashCode( RaycastHit obj)
+        {
+            return obj.transform.GetHashCode();
+        }
     }
 }
