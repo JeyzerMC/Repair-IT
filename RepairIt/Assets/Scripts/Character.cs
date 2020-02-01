@@ -44,14 +44,6 @@ public class Character : MonoBehaviour
         if (Time.time > _boostTime + boostDuration)
         {
             _currentSpeed = baseSpeed;
-        } else 
-        {
-            Debug.Log("IN COOLDOWN");
-        }
-
-        if (_currentSpeed == boostSpeed)
-        {
-            Debug.Log("BOOSTED");
         }
 
         Vector3 verticalAxis = new Vector3(0, 0, 1) * _input.GetPlayerAxis("Vertical");
