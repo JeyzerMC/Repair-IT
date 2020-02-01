@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -24,6 +22,11 @@ public class PlayerInput : MonoBehaviour
     public float GetPlayerAxis(string name)
     {
         return Input.GetAxis(player + "_" + name);
+    }
+
+    public bool GetPlayerButtonDown(string name)
+    {
+        return Input.GetButtonDown(player + "_" + name);
     }
 
     public bool GetPlayerButton(string name)
