@@ -18,11 +18,14 @@ public class Interactror : MonoBehaviour
 
     public bool IsHoldingObject { get { return heldObject != null; } private set { } }
 
+    private Animator _anim;
+
     // Start is called before the first frame update
     void Start()
     {
         input = GetComponent<PlayerInput>();
         Hands = transform.Find("Hands");
+        _anim = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -31,6 +34,10 @@ public class Interactror : MonoBehaviour
         if (input.GetPlayerButtonDown("Fire1"))
         {
             TryInteract();
+            if (_anim != null)
+            {
+                _anim.SetTrigger("Pickup");
+            }
         }
 
         RaycastWhiskers(true, Hands.position,
