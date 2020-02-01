@@ -11,6 +11,8 @@ public class CounterManager : MonoBehaviour
 
     private int nbDropoffs;
 
+    private List<int> waitingDropoffs;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,8 @@ public class CounterManager : MonoBehaviour
         dropoffs = FindObjectsOfType<Dropoff>();
 
         nbDropoffs = 0;
+
+        waitingDropoffs = new List<int>();
     }
 
     // Update is called once per frame
@@ -40,8 +44,18 @@ public class CounterManager : MonoBehaviour
             if (!dropoffs[idx].IsDropoffOpen())
             {
                 dropoffs[idx].Open();
+                waitingDropoffs.Add(idx);
                 nbDropoffs++;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.L) && waitingDropoffs.Count > 0)
+        {
+            int idx = Random.Range(0, waitingDropoffs.Count);
+            int customer = waitingDropoffs[idx];
+            Debug.Log($"Removing customer #{customer}");
+            dropoffs[customer].MakeCustomerLeave();
+            waitingDropoffs.RemoveAt(idx);
         }
     }
 }
