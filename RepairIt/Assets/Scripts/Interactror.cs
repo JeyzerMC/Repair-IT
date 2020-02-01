@@ -77,14 +77,14 @@ public class Interactror : MonoBehaviour
             }
         }
 
-        if (!foundContainer && foundInteractee != null)
+        if (!IsHoldingObject && !foundContainer && foundInteractee != null)
         {
             Debug.Log("Didn't find container, interacting with the interactee!");
             InteractWith(foundInteractee);
             return;
         }
 
-        if (heldObject != null)
+        if (IsHoldingObject)
         {
             InteractWith(heldObject);
         }
