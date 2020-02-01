@@ -111,3 +111,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# blender backup files
+*.blend1
+*.blend1.meta
+
