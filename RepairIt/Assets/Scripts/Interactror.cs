@@ -20,6 +20,7 @@ public class Interactror : MonoBehaviour
         {
             TryInteract();
         }
+        Debug.DrawRay(transform.position, transform.forward * MAX_RAYCAST_DISTANCE, Color.red, 0, false);
     }
 
     void TryInteract()
