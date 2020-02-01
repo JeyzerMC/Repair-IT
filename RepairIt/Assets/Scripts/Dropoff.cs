@@ -5,7 +5,11 @@ using UnityEngine;
 public class Dropoff : MonoBehaviour
 {
     [SerializeField]
-    Transform itemSpawnPosition;
+    Transform itemSpawnPosition = null;
+    [SerializeField]
+    Animator characterAnimator = null;
+    [SerializeField]
+    GameObject characterComputer = null;
 
     // Start is called before the first frame update
     void Start()
@@ -16,14 +20,16 @@ public class Dropoff : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator MakeCustomerArrive()
     {
-        
+        characterAnimator.SetTrigger("New Order");
+        yield return new WaitForSeconds(1);
+        Instantiate(characterComputer, itemSpawnPosition.position, itemSpawnPosition.rotation);
     }
 
-    public void MakeCustomerArrive()
+    public void MakeCustomerLeave()
     {
-
+        characterAnimator.SetTrigger("Order Done");
+        Instantiate(characterComputer, itemSpawnPosition.position, itemSpawnPosition.rotation);
     }
 }
