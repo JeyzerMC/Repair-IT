@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -10,6 +11,10 @@ public class Interactror : MonoBehaviour
     private PlayerInput input;
     private GameObject heldObject = null;
     private Transform Hands;
+
+    public float minWhiskerAngle = 65;
+    public float maxWhiskerAngle = 90;
+    public int whiskerNumber = 5;
 
     public bool IsHoldingObject { get { return heldObject != null; } private set { } }
 
@@ -27,8 +32,6 @@ public class Interactror : MonoBehaviour
         {
             TryInteract();
         }
-
-        Debug.DrawRay(Hands.position, Quaternion.AngleAxis(65f, Hands.right) * Hands.forward * MAX_RAYCAST_DISTANCE, Color.red, 0, false);
     }
 
     void TryInteract()
@@ -37,7 +40,12 @@ public class Interactror : MonoBehaviour
         bool foundContainer = false;
         GameObject foundInteractee = null;
 
-        foreach (var hit in Physics.RaycastAll(Hands.position, Quaternion.AngleAxis(65f, Hands.right) * Hands.forward, MAX_RAYCAST_DISTANCE).OrderBy(x => x.distance))
+        var hits = RaycastWhiskers(Hands.position,
+            Quaternion.AngleAxis(minWhiskerAngle, Hands.right) * Hands.forward * MAX_RAYCAST_DISTANCE,
+            Quaternion.AngleAxis(maxWhiskerAngle, Hands.right) * Hands.forward * MAX_RAYCAST_DISTANCE,
+            whiskerNumber);
+
+        foreach (var hit in hits)
         {
             Debug.Log("Testing hit at distance: " + hit.distance);
             var collider = hit.collider;
@@ -90,5 +98,26 @@ public class Interactror : MonoBehaviour
         {
             heldObject = null;
         }
+    }
+
+    public IEnumerable<RaycastHit> RaycastWhiskers(Vector3 position, Vector3 fromDirection, Vector3 toDirection, int number)
+    {
+        List<RaycastHit> hits = new List<RaycastHit>();
+
+        for (int i = 0; i < number; ++i)
+        {
+            float progress = i / ((float)number - 1);
+            Vector3 direction = Vector3.Slerp(fromDirection, toDirection, progress);
+            Debug.DrawRay(
+                position,
+                direction,
+                Color.Lerp(Color.red, Color.white, progress),
+                1, // 1 second display for debugging
+                false);
+            var hit = Physics.RaycastAll(position, direction, direction.magnitude).OrderBy(x => x.distance);
+            hits.AddRange(hit);
+        }
+
+        return hits;
     }
 }
