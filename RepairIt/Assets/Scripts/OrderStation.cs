@@ -14,11 +14,11 @@ public class OrderStation : MonoBehaviour, Interactee
         // Lets find the truck thrower
         _truckThrower = GameObject.FindObjectOfType<TruckThrower>();
     }
-    
-    public void OnInteraction(Interactror interactror)
+
+    bool Interactee.OnInteraction(Interactror interactror)
     {
         Debug.Log("Bruh");
         _truckThrower.ThrowBox(boxPrefab);
+        return false;
     }
-
 }
