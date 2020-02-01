@@ -115,3 +115,6 @@ Temporary Items
 *.blend1
 *.blend1.meta
 
+# other backup files
+*~
+
