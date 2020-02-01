@@ -5,7 +5,7 @@ public class TestInteractee : MonoBehaviour, Interactee
 
     private bool isPickedUp = false;
 
-    public void OnInteraction(Interactror interactror)
+    public bool OnInteraction(Interactror interactror)
     {
         Debug.Log(transform.parent);
         if (!isPickedUp)
@@ -15,10 +15,12 @@ public class TestInteractee : MonoBehaviour, Interactee
 
             // TODO: DISABLE THE RIGIDBODY COMPONENT (Disable != Delete)
             isPickedUp = true;
-            return;
+            return true;
         }
 
         isPickedUp = false;
         transform.parent = null;
+
+        return false;
     }
 }
