@@ -358,13 +358,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 824686687}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.41, y: 3.3, z: -6.34}
+  m_LocalRotation: {x: 0.5216587, y: -0, z: -0, w: 0.8531543}
+  m_LocalPosition: {x: 0.41, y: 11.42, z: -6.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 62.887005, y: 0, z: 0}
 --- !u!1 &1207782881
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,16 +483,6 @@ PrefabInstance:
         type: 3}
       propertyPath: player
       value: j2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5464845480021603345, guid: f1ccbf78a0f4a2a4fa342a1ab2e24106,
-        type: 3}
-      propertyPath: minWhiskerAngle
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5464845480021603345, guid: f1ccbf78a0f4a2a4fa342a1ab2e24106,
-        type: 3}
-      propertyPath: maxWhiskerAngle
-      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 5485668363487420664, guid: f1ccbf78a0f4a2a4fa342a1ab2e24106,
         type: 3}
