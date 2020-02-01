@@ -21,6 +21,7 @@ public class Character : MonoBehaviour
 
     private CharacterController _controller;
     private Rigidbody _rb;
+    private Animator _anim;
 
     private float _boostTime;
 
@@ -33,28 +34,36 @@ public class Character : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         _rb = GetComponent<Rigidbody>();
         _boostTime = 0.0f;
-        _currentSpeed = baseSpeed;
+        _anim = GetComponentInChildren<Animator>();
+        _anim.SetBool("Grounded", true);
+    }
+
+    private void Update()
+    {
+        _anim.SetFloat("MoveSpeed", _currentSpeed);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        float maxSpeed;
         if (_input.GetPlayerButton("Boost") && Time.time >= _boostTime + boostDuration + boostCooldown)
         {
             _boostTime = Time.time;
-            _currentSpeed = boostSpeed;
+            maxSpeed = boostSpeed;
         }
-
-        if (Time.time > _boostTime + boostDuration)
+        else
         {
-            _currentSpeed = baseSpeed;
+            maxSpeed = baseSpeed;
         }
 
         Vector3 verticalAxis = new Vector3(0, 0, 1) * _input.GetPlayerAxis("Vertical");
         Vector3 horizontalAxis = new Vector3(1, 0, 0) * _input.GetPlayerAxis("Horizontal");
 
         Vector3 translation = verticalAxis + horizontalAxis;
-        translation *= _currentSpeed * Time.deltaTime;
+        translation *= maxSpeed;
+        _currentSpeed = translation.magnitude;
+        translation *= Time.fixedDeltaTime;
 
         _controller.Move(translation + Vector3.down);
 
