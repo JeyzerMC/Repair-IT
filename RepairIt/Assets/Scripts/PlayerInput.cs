@@ -4,7 +4,7 @@ public class PlayerInput : MonoBehaviour
 {
     // key, j1, j2, j3, j4
     [SerializeField]
-    string player;
+    string player = "key";
 
     // Start is called before the first frame update
     void Start()
