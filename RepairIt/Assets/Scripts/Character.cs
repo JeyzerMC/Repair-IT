@@ -46,10 +46,14 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        float maxSpeed;
-        if (_input.GetPlayerButton("Boost") && Time.time >= _boostTime + boostDuration + boostCooldown)
+        if (_input.GetPlayerButton("Boost") && CanBoost())
         {
             _boostTime = Time.time;
+        }
+
+        float maxSpeed;
+        if (IsBoosting())
+        {
             maxSpeed = boostSpeed;
         }
         else
@@ -87,5 +91,15 @@ public class Character : MonoBehaviour
 
         // Apply the push
         body.velocity = pushDir * pushPower / body.mass;
+    }
+
+    private bool IsBoosting()
+    {
+        return Time.time <= _boostTime + boostDuration;
+    }
+
+    private bool CanBoost()
+    {
+        return Time.time >= _boostTime + boostDuration + boostCooldown;
     }
 }
