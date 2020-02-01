@@ -16,8 +16,8 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float translation = Input.GetAxis("Vertical") * speed;
-        float rotation = Input.GetAxis("Horizontal") * rotationSpeed;
+        float translation = Input.GetAxis("key_Vertical") * speed;
+        float rotation = Input.GetAxis("key_Horizontal") * rotationSpeed;
 
         translation *= Time.deltaTime;
         rotation *= Time.deltaTime;
@@ -29,7 +29,7 @@ public class Character : MonoBehaviour
         {
             Debug.Log("Riz publicité");
             Debug.DrawLine(
-                transform.position, 
+                transform.position,
                 transform.position + 30.0f * transform.forward,
                 Color.white,
                 5.0f
