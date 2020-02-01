@@ -33,7 +33,7 @@ public class Character : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (_input.GetPlayerButton("Boost") && Time.time >= _boostTime + boostDuration + boostCooldown)
         {
@@ -52,7 +52,7 @@ public class Character : MonoBehaviour
         Vector3 translation = verticalAxis + horizontalAxis;
         translation *= _currentSpeed * Time.deltaTime;
 
-        _controller.Move(translation);
+        _controller.Move(translation + Vector3.down);
 
         if (translation.magnitude != 0)
             transform.forward = translation;

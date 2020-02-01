@@ -5,10 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInput))]
 public class Interactror : MonoBehaviour
 {
-    public const float MAX_RAYCAST_DISTANCE = 0.9f;
+    public const float MAX_RAYCAST_DISTANCE = 1.2f;
 
     private PlayerInput input;
     private GameObject heldObject = null;
+    private Transform Hands;
 
     public bool IsHoldingObject { get { return heldObject != null; } private set { } }
 
@@ -16,6 +17,7 @@ public class Interactror : MonoBehaviour
     void Start()
     {
         input = GetComponent<PlayerInput>();
+        Hands = transform.Find("Hands");
     }
 
     // Update is called once per frame
@@ -25,7 +27,8 @@ public class Interactror : MonoBehaviour
         {
             TryInteract();
         }
-        Debug.DrawRay(transform.position, transform.forward * MAX_RAYCAST_DISTANCE, Color.red, 0, false);
+
+        Debug.DrawRay(Hands.position, Quaternion.AngleAxis(65f, Hands.right) * Hands.forward * MAX_RAYCAST_DISTANCE, Color.red, 0, false);
     }
 
     void TryInteract()
@@ -34,13 +37,14 @@ public class Interactror : MonoBehaviour
         bool foundContainer = false;
         GameObject foundInteractee = null;
 
-        foreach (var hit in Physics.RaycastAll(transform.position, transform.forward, MAX_RAYCAST_DISTANCE).OrderBy(x => x.distance))
+        foreach (var hit in Physics.RaycastAll(Hands.position, Quaternion.AngleAxis(65f, Hands.right) * Hands.forward, MAX_RAYCAST_DISTANCE).OrderBy(x => x.distance))
         {
-            Debug.Log("Testing hit at distance: "+hit.distance);
+            Debug.Log("Testing hit at distance: " + hit.distance);
             var collider = hit.collider;
             if (collider.TryGetComponent<Interactee>(out var interactee))
             {
-                if(IsHoldingObject && collider.TryGetComponent<ObjectContainer>(out var container))
+                Debug.Log("FOUND INTERACTEE!");
+                if (IsHoldingObject && collider.TryGetComponent<ObjectContainer>(out var container))
                 {
                     Debug.Log("INTERACTING WITH CONTAINER!!!");
                     if (container.PutObject(heldObject))
@@ -51,22 +55,29 @@ public class Interactror : MonoBehaviour
                     break;
                 }
 
-                if (foundInteractee == null) {
+                if (foundInteractee == null)
+                {
                     foundInteractee = collider.gameObject;
                 }
             }
         }
 
-        if(!foundContainer && foundInteractee != null)
+        if (!foundContainer && foundInteractee != null)
         {
             Debug.Log("Didn't find container, interacting with the interactee!");
             InteractWith(foundInteractee);
+            return;
+        }
+
+        if (heldObject != null)
+        {
+            InteractWith(heldObject);
         }
     }
 
     public void InteractWith(GameObject gameObject)
     {
-        if(!gameObject.TryGetComponent<Interactee>(out var interactee))
+        if (!gameObject.TryGetComponent<Interactee>(out var interactee))
         {
             return;
         }
@@ -74,6 +85,10 @@ public class Interactror : MonoBehaviour
         if (interactee.OnInteraction(this))
         {
             heldObject = gameObject;
+        }
+        else
+        {
+            heldObject = null;
         }
     }
 }
