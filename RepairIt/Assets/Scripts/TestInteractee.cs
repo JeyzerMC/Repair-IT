@@ -1,25 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TestInteractee : MonoBehaviour, Interactee
 {
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private bool isPickedUp = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
     public void OnInteraction(Interactror interactror)
     {
-        Debug.Log("GOT INTERACTED WITH!");
-        Destroy(gameObject);
+        Debug.Log(transform.parent);
+        if (!isPickedUp)
+        {
+            Debug.Log("I got picked up!");
+            transform.parent = interactror.transform;
+
+            // TODO: DISABLE THE RIGIDBODY COMPONENT (Disable != Delete)
+            isPickedUp = true;
+            return;
+        }
+
+        isPickedUp = false;
+        transform.parent = null;
     }
 }

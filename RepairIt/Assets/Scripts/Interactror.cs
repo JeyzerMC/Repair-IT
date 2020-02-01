@@ -1,21 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerInput))]
 public class Interactror : MonoBehaviour
 {
     public const float MAX_RAYCAST_DISTANCE = 0.9f;
+    private PlayerInput input;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        input = GetComponent<PlayerInput>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (input.GetPlayerButtonDown("Fire1"))
         {
             TryInteract();
         }
@@ -27,12 +28,12 @@ public class Interactror : MonoBehaviour
         foreach (var hit in Physics.RaycastAll(transform.position, transform.forward, MAX_RAYCAST_DISTANCE).OrderBy(x => x.distance))
         {
             Debug.Log("Testing hit at distance: "+hit.distance);
-            if (hit.collider.TryGetComponent<Interactee>(out var interactee))
+            var collider = hit.collider;
+            if (collider.TryGetComponent<Interactee>(out var interactee))
             {
                 interactee.OnInteraction(this);
                 break;
             }
         }
-        
     }
 }
