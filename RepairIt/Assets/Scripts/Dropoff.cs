@@ -17,7 +17,9 @@ public class Dropoff : MonoBehaviour
 
     private bool _orderAwaiting;
 
-    private bool _isOpen;
+    private bool _isOpen; 
+
+    private float _availabilityTime;
 
     // Start is called before the first frame update
     void Start()
@@ -29,18 +31,14 @@ public class Dropoff : MonoBehaviour
 
         _orderAwaiting = false;
         _isOpen = false;
+        _availabilityTime = 0;
     }
 
     void Update()
     {
-        if (_isOpen && !_orderAwaiting)
+        if (_isOpen && !_orderAwaiting && Time.time > _availabilityTime)
         {
             StartCoroutine(MakeCustomerArrive());
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            MakeCustomerLeave();
         }
     }
 
@@ -56,12 +54,16 @@ public class Dropoff : MonoBehaviour
     {
         if (_orderAwaiting)
         {
-            _orderAwaiting = false;
+            Debug.Log("Arriving....");
             characterAnimator.SetTrigger("Order Done");
             if (computer != null)
             {
                 Destroy(computer);
             }
+
+            _orderAwaiting = false;
+            int rTime = Random.Range(5, 10);
+            _availabilityTime = Time.time + rTime;
         }
     }
 
@@ -74,5 +76,10 @@ public class Dropoff : MonoBehaviour
     public bool IsDropoffOpen()
     {
         return _isOpen;
+    }
+
+    public bool IsOrderWaiting()
+    {
+        return _orderAwaiting;
     }
 }
