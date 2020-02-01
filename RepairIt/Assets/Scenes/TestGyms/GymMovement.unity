@@ -401,6 +401,16 @@ PrefabInstance:
       propertyPath: player
       value: key
       objectReference: {fileID: 0}
+    - target: {fileID: 5485668363487420659, guid: f1ccbf78a0f4a2a4fa342a1ab2e24106,
+        type: 3}
+      propertyPath: boostDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5485668363487420659, guid: f1ccbf78a0f4a2a4fa342a1ab2e24106,
+        type: 3}
+      propertyPath: boostSpeed
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 5485668363487420664, guid: f1ccbf78a0f4a2a4fa342a1ab2e24106,
         type: 3}
       propertyPath: m_Name
