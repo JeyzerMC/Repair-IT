@@ -11,13 +11,14 @@ public class PlayerInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Debug.Log(GetPlayerAxis("Horizontal"));
+        if (player == null || player == "")
+        {
+            Debug.LogError("Please set the player field of this PlayerInput component");
+        }
+        else if (player != "key" && player != "j1" && player != "j2" && player != "j3" && player != "j4")
+        {
+            Debug.LogError("A PlayerInput component has a player '" + player + "'. It must be one of key, j1, j2, j3 or j4");
+        }
     }
 
     public float GetPlayerAxis(string name)
