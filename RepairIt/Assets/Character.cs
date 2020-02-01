@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerInput))]
 public class Character : MonoBehaviour
 {
     public float speed = 10.0f;
     public float rotationSpeed = 100.0f;
 
+    private PlayerInput _Input;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _Input = GetComponent<PlayerInput>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float translation = Input.GetAxis("key_Vertical") * speed;
-        float rotation = Input.GetAxis("key_Horizontal") * rotationSpeed;
+        float translation = _Input.GetPlayerAxis("Vertical") * speed;
+        float rotation = _Input.GetPlayerAxis("Horizontal") * rotationSpeed;
 
         translation *= Time.deltaTime;
         rotation *= Time.deltaTime;
@@ -25,7 +28,7 @@ public class Character : MonoBehaviour
         transform.Translate(0, 0, translation);
         transform.Rotate(0, rotation, 0);
 
-        if (Input.GetKeyDown(KeyCode.T))
+        if (_Input.GetPlayerButton("Fire1"))
         {
             Debug.Log("Riz publicité");
             Debug.DrawLine(
