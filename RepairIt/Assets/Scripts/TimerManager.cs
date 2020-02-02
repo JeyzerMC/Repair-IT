@@ -11,13 +11,16 @@ public class TimerManager : MonoBehaviour
 
     TextMeshProUGUI textComp;
 
-    private GameObject endGame;
+    private GameObject _endGame;
+    
+    private MoneyManager _moneyManager;
 
     // Start is called before the first frame update
     void Start()
     {
         TryGetComponent<TextMeshProUGUI>(out textComp);
-        endGame = GameObject.Find("EndGameScreen");
+        _endGame = GameObject.Find("EndGameScreen");
+        _moneyManager = FindObjectOfType<MoneyManager>();
         
         ResetGame();
         UpdateTimer();
@@ -34,9 +37,9 @@ public class TimerManager : MonoBehaviour
     {
         var remainingTime = (int) Mathf.Round(timeLimit - Time.time + startTime);
 
-        if (remainingTime == 0 && endGame != null)
+        if (remainingTime == 0 && _endGame != null)
         {
-            endGame.SetActive(true);
+            _endGame.SetActive(true);
             playing = false;
             Debug.Log("Endgame");
         }
@@ -49,8 +52,11 @@ public class TimerManager : MonoBehaviour
     {
         startTime = Time.time;
         playing = true;
-        if (endGame != null)
-            endGame.SetActive(false);
+        if (_endGame != null)
+            _endGame.SetActive(false);
+
+        if (_moneyManager != null)
+            _moneyManager.ResetMoney(); 
     }
 
     public void QuitGame()

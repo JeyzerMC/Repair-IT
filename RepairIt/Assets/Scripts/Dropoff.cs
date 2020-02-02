@@ -95,6 +95,12 @@ public class Dropoff : ObjectContainer
         {
             Destroy(computer.gameObject);
             MakeCustomerLeave();
+
+            var moneyManager = FindObjectOfType<MoneyManager>();
+
+            if (moneyManager != null)
+                moneyManager.CompleteOrder();
+                
             return true;
         }
         return false;
