@@ -102,7 +102,7 @@ public class Dropoff : ObjectContainer
 
             if (moneyManager != null)
                 moneyManager.CompleteOrder();
-                
+
             return true;
         }
         return false;

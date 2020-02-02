@@ -31,6 +31,10 @@ public class TimerManager : MonoBehaviour
     {
         if (playing)
             UpdateTimer();
+        else if (Input.GetButtonDown("j1_Fire1") || Input.GetButtonDown("j2_Fire1") || Input.GetButtonDown("key_Fire1"))
+            ResetGame();
+        // else if (Input.GetButtonDown("j1_Fire2") || Input.GetButtonDown("j2_Fire2") || Input.GetButtonDown("key_Fire2"))
+        //     QuitGame();
     }
 
     void UpdateTimer()
