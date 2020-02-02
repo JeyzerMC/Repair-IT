@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Exacto
   - Ram
+  - Cpu
   layers:
   - Default
   - TransparentFX
