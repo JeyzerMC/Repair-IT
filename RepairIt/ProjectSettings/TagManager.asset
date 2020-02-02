@@ -7,6 +7,9 @@ TagManager:
   - Exacto
   - Ram
   - Cpu
+  - Fan
+  - Psu
+  - Wire
   layers:
   - Default
   - TransparentFX

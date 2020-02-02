@@ -35,11 +35,11 @@ public class CounterManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (nbDropoffs < 3 && Time.time > spawnTimes[nbDropoffs])
+        if (nbDropoffs < dropoffs.Length && Time.time > spawnTimes[nbDropoffs])
         {
             Debug.Log("Opening random dropoff");
 
-            int idx = Random.Range(0, 3);
+            int idx = Random.Range(0, dropoffs.Length);
 
             if (!dropoffs[idx].IsDropoffOpen())
             {
@@ -57,5 +57,19 @@ public class CounterManager : MonoBehaviour
             dropoffs[customer].MakeCustomerLeave();
             waitingDropoffs.RemoveAt(idx);
         }
+    }
+
+    public List<string> GenerateRequirements()
+    {
+        List<string> requirements = new List<string>();
+        int difficulty = 4;
+        int numberOfRequirements = Random.Range(1, difficulty);
+        string[] possibilities = { "Ram", "Cpu" };
+        for (int i = 0; i < numberOfRequirements; ++i)
+        {
+            requirements.Add(possibilities[Random.Range(0, possibilities.Length)]);
+        }
+
+        return requirements;
     }
 }
