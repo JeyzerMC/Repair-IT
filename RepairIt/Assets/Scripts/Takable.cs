@@ -24,6 +24,17 @@ public class Takable : Interactee
         transform.parent = isPickedUp ? interactror.Hands : null;
         interactror.heldObject = isPickedUp ? this : null;
 
+        UpdateComponentStatus();
+    }
+
+    public void EnsurePlaced()
+    {
+        isPickedUp = true;
+        UpdateComponentStatus();
+    }
+
+    void UpdateComponentStatus()
+    {
         // TODO: indstead of resetting, set to previous state
         var colliders = GetComponents<Collider>();
         foreach (Collider c in colliders)
