@@ -17,6 +17,9 @@ public class Character : MonoBehaviour
 
     public float pushPower = 2f;
 
+    private bool _freezed = false;
+    public bool Freezed { get { return _freezed; } set { _freezed = value; if (_freezed) { _currentSpeed = 0; } } }
+
     private PlayerInput _input;
 
     private CharacterController _controller;
@@ -46,6 +49,8 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (Freezed) return;
+
         if (_input.GetPlayerButton("Boost") && CanBoost())
         {
             _boostTime = Time.time;
