@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2589958013655062747}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.762, z: -0.014}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2449234710219403477}
@@ -239,5 +239,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSpawnPosition: {fileID: 2589958013655062724}
   characterAnimator: {fileID: 2589958014146305751}
-  characterComputer: {fileID: 6460844499600423575, guid: c79da9b64c088a44b943ac59d616abe5,
+  characterComputer: {fileID: 8640100735583738412, guid: 1ac48ba982d5bf34fb4626d187a5c931,
     type: 3}
