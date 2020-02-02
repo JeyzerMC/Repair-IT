@@ -24,12 +24,15 @@ public class RepairObjectAnalyzer : ObjectContainer
     private ProgressBar progressBar;
     private GameObject progressionUI;
 
+    private AudioSource typingSound;
+
 
     void Start()
     {
         progressBar = GetComponentInChildren<ProgressBar>();
         progressionUI = transform.Find("ProgressionUI").gameObject;
         progressionUI.SetActive(false);
+        typingSound = GetComponent<AudioSource>();
     }
     
     // Update is called once per frame
@@ -44,7 +47,7 @@ public class RepairObjectAnalyzer : ObjectContainer
                 currentTime = 0;
                 var LastObj = containedObjects[containedObjects.Count - 1];
                 LastObj.GetComponent<Analyzable>().OnAnalyzeFinished();
-
+                typingSound.Stop();
                 AddFinalText(LastObj);
             }
 
@@ -104,6 +107,7 @@ public class RepairObjectAnalyzer : ObjectContainer
         progressBar.Progress = 0;
         progressionUI.SetActive(true);
         analyzable.OnAnalyze(this, interactor);
+        typingSound.Play();
         gameObject.transform.position = depotSpot.position;
         gameObject.transform.rotation = depotSpot.rotation;
 
@@ -118,6 +122,7 @@ public class RepairObjectAnalyzer : ObjectContainer
             currentTime = 0;
             progressBar.Progress = 0;
             interactror.heldObject.GetComponent<Analyzable>().OnAnalyzeCancelled();
+            typingSound.Stop();
         }
 
         if (!ContainsObject)
