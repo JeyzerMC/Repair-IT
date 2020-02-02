@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class RepairObjectAnalyzer : ObjectContainer
 {
@@ -42,9 +41,12 @@ public class RepairObjectAnalyzer : ObjectContainer
             {
                 AnalyzeFinished = true;
                 currentTime = 0;
-                containedObjects[containedObjects.Count - 1].GetComponent<Analyzable>().OnAnalyzeFinished();
+                var LastObj = containedObjects[containedObjects.Count - 1];
+                LastObj.GetComponent<Analyzable>().OnAnalyzeFinished();
+
                 var text = RecipeResult.gameObject.AddComponent<Text>();
-                text.text = "Analyze finished!";
+                text.text = "Analyze finished: \n" + GetRecipe(LastObj);
+                
                 text.resizeTextForBestFit = true;
                 text.verticalOverflow = VerticalWrapMode.Truncate;
                 text.horizontalOverflow = HorizontalWrapMode.Wrap;
@@ -58,6 +60,22 @@ public class RepairObjectAnalyzer : ObjectContainer
             progressBar.Progress = currentTime / AnalyzeTime;
             Debug.Log(currentTime + " --> " + currentTime / AnalyzeTime);
         }
+    }
+
+    private string GetRecipe(Takable lastObj)
+    {
+        if(!lastObj.TryGetComponent<Repairable>(out var repairable))
+        {
+            return "Not repairable!\n";
+        }
+
+        string result = "";
+        foreach (var req in repairable.requirements.GroupBy(x => x))
+        {
+            result += req.Count() +"x " + req.Key + "\n";
+        }
+
+        return result;
     }
 
     protected override bool TryAddObject(Takable gameObject, Interactror interactor)
