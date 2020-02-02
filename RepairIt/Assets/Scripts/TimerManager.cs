@@ -16,13 +16,19 @@ public class TimerManager : MonoBehaviour
     
     private MoneyManager _moneyManager;
 
+    private AudioSource mainMusic;
+    public AudioClip fastClip;
+    public AudioClip slowClip;
+
     // Start is called before the first frame update
     void Start()
     {
         TryGetComponent<TextMeshProUGUI>(out textComp);
         _endGame = GameObject.Find("EndGameScreen");
         _moneyManager = FindObjectOfType<MoneyManager>();
-        
+
+        mainMusic = Camera.main.GetComponent<AudioSource>();
+
         ResetGame();
         UpdateTimer();
     }
@@ -42,9 +48,16 @@ public class TimerManager : MonoBehaviour
     {
         var remainingTime = (int) Mathf.Round(timeLimit - Time.time + startTime);
 
+        if (remainingTime < 15 && mainMusic.clip != fastClip)
+        {
+            mainMusic.clip = fastClip;
+            mainMusic.Play();
+        }
+
         if (remainingTime == 0 && _endGame != null)
         {
             _endGame.SetActive(true);
+            mainMusic.Stop();
             playing = false;
             Debug.Log("Endgame");
         }
@@ -61,7 +74,9 @@ public class TimerManager : MonoBehaviour
             _endGame.SetActive(false);
 
         if (_moneyManager != null)
-            _moneyManager.ResetMoney(); 
+            _moneyManager.ResetMoney();
+        mainMusic.clip = slowClip;
+        mainMusic.Play();
     }
 
     public void QuitGame()
