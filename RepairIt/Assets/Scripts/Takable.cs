@@ -24,9 +24,10 @@ public class Takable : Interactee
         interactror.heldObject = isPickedUp ? this : null;
 
         // TODO: indstead of resetting, set to previous state
-        if (TryGetComponent<Collider>(out var collider))
+        var colliders = GetComponents<Collider>();
+        foreach (Collider c in colliders)
         {
-            collider.enabled = !isPickedUp;
+            c.enabled = !isPickedUp;
         }
         if (TryGetComponent<Rigidbody>(out var rigidbody))
         {
