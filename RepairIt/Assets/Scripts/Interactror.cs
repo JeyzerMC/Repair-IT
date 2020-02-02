@@ -11,8 +11,12 @@ public class Interactror : MonoBehaviour
     private PlayerInput input;
     [NonSerialized]
     public Takable heldObject = null;
+    
     [NonSerialized]
     public Transform Hands;
+    
+    [NonSerialized]
+    public Transform WhiskersOrigin;
 
     public float minWhiskerAngle = -25;
     public float maxWhiskerAngle = 80;
@@ -27,6 +31,7 @@ public class Interactror : MonoBehaviour
     {
         input = GetComponent<PlayerInput>();
         Hands = transform.Find("Hands");
+        WhiskersOrigin = transform.Find("WhiskersOrigin");
         if (Hands == null)
         {
             Debug.LogError("Interactor doesn't have \"Hands\"");
@@ -46,17 +51,17 @@ public class Interactror : MonoBehaviour
             }
         }
 
-        RaycastWhiskers(true, Hands.position,
-            Quaternion.AngleAxis(minWhiskerAngle, Hands.right) * Hands.forward * MAX_RAYCAST_DISTANCE,
-            Quaternion.AngleAxis(maxWhiskerAngle, Hands.right) * Hands.forward * MAX_RAYCAST_DISTANCE,
+        RaycastWhiskers(true, WhiskersOrigin.position,
+            Quaternion.AngleAxis(minWhiskerAngle, Hands.right) * WhiskersOrigin.forward * MAX_RAYCAST_DISTANCE,
+            Quaternion.AngleAxis(maxWhiskerAngle, Hands.right) * WhiskersOrigin.forward * MAX_RAYCAST_DISTANCE,
             whiskerNumber);
     }
 
     void TryInteract()
     {
-        var hits = RaycastWhiskers(false, Hands.position,
-            Quaternion.AngleAxis(minWhiskerAngle, Hands.right) * Hands.forward * MAX_RAYCAST_DISTANCE,
-            Quaternion.AngleAxis(maxWhiskerAngle, Hands.right) * Hands.forward * MAX_RAYCAST_DISTANCE,
+        var hits = RaycastWhiskers(false, WhiskersOrigin.position,
+            Quaternion.AngleAxis(minWhiskerAngle, Hands.right) * WhiskersOrigin.forward * MAX_RAYCAST_DISTANCE,
+            Quaternion.AngleAxis(maxWhiskerAngle, Hands.right) * WhiskersOrigin.forward * MAX_RAYCAST_DISTANCE,
             whiskerNumber);
         Debug.Log($"{hits.Count()} Hits!");
 
