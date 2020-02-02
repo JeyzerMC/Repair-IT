@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 2569237004182467453}
   - component: {fileID: 2569237004182467452}
   - component: {fileID: 2569237004182467455}
+  - component: {fileID: 6225218695780268073}
   m_Layer: 5
   m_Name: ProgressionUI
   m_TagString: Untagged
@@ -173,6 +174,23 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6225218695780268073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2569237004182467454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66acb37318f725e40acfe63857f81ab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Camera: {fileID: 0}
+  RotationX: 0
+  RotationY: 0
+  RotationZ: 0
+  DynamicUpdate: 0
 --- !u!1 &2569237004388461188
 GameObject:
   m_ObjectHideFlags: 0
