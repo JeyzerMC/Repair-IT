@@ -35,11 +35,11 @@ public class CounterManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (nbDropoffs < 5 && Time.time > spawnTimes[nbDropoffs])
+        if (nbDropoffs < 3 && Time.time > spawnTimes[nbDropoffs])
         {
             Debug.Log("Opening random dropoff");
 
-            int idx = Random.Range(0, 5);
+            int idx = Random.Range(0, 3);
 
             if (!dropoffs[idx].IsDropoffOpen())
             {

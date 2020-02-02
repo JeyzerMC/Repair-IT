@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2585216661241804796}
   - component: {fileID: 8217229836301989175}
   - component: {fileID: 4219250164984701645}
-  - component: {fileID: 8640100735583738412}
+  - component: {fileID: -6233293353548809911}
   m_Layer: 0
   m_Name: Desktop computer
   m_TagString: Untagged
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 553a8778cfda85448a2803de950995ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8640100735583738412
+--- !u!114 &-6233293353548809911
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7244702264268148134}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa597bc9bdc0c7a4ca2ad8a698a34ed9, type: 3}
+  m_Script: {fileID: 11500000, guid: 49c7763c74565b84f8e6446bd77b322d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   requirements:
