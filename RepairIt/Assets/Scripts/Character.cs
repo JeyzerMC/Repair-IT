@@ -7,13 +7,13 @@ public class Character : MonoBehaviour
 {
     public float baseSpeed = 20.0f;
 
-    public float boostSpeed = 80.0f;
+    public float boostSpeed = 90.0f;
 
     public float rotationSpeed = 100.0f;
 
     public float boostCooldown = 2.0f;
 
-    public float boostDuration = 0.2f;
+    public float boostDuration = 0.3f;
 
     public float pushPower = 2f;
 

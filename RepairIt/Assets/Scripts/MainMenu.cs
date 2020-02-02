@@ -7,6 +7,8 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.GetButtonDown("j1_Fire1") || Input.GetButtonDown("j2_Fire1") || Input.GetButtonDown("key_Fire1"))
             PlayButton();
+        else if (Input.GetButtonDown("j1_Fire2") || Input.GetButtonDown("j2_Fire2") || Input.GetButtonDown("key_Fire2"))
+            QuitButton();
     }
 
     // Start is called before the first frame update
@@ -17,7 +19,6 @@ public class MainMenu : MonoBehaviour
 
     public void QuitButton()
     {
-        Debug.Log("Quit!");
         Application.Quit();
     }
 }

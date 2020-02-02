@@ -34,8 +34,8 @@ public class TimerManager : MonoBehaviour
             UpdateTimer();
         else if (Input.GetButtonDown("j1_Fire1") || Input.GetButtonDown("j2_Fire1") || Input.GetButtonDown("key_Fire1"))
             SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
-        // else if (Input.GetButtonDown("j1_Fire2") || Input.GetButtonDown("j2_Fire2") || Input.GetButtonDown("key_Fire2"))
-        //     QuitGame();
+        else if (Input.GetButtonDown("j1_Fire2") || Input.GetButtonDown("j2_Fire2") || Input.GetButtonDown("key_Fire2"))
+            QuitGame();
     }
 
     void UpdateTimer()
@@ -66,6 +66,7 @@ public class TimerManager : MonoBehaviour
 
     public void QuitGame()
     {
+        Debug.Log("Quit");
         Application.Quit();
     }
 }
