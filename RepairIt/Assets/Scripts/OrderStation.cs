@@ -5,8 +5,11 @@ using UnityEngine;
 public class OrderStation : Interactee
 {
     [SerializeField]
-    Rigidbody boxPrefab = null;
+    DeliveryboxBehaviour boxPrefab = null;
     TruckThrower _truckThrower;
+
+    [SerializeField]
+    Takable content;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +21,6 @@ public class OrderStation : Interactee
     public override void OnInteraction(Interactror interactror)
     {
         Debug.Log("Bruh");
-        _truckThrower.ThrowBox(boxPrefab);
+        _truckThrower.ThrowBox(boxPrefab.GetComponent<Rigidbody>()).GetComponent<DeliveryboxBehaviour>().content = content;
     }
 }

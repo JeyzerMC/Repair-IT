@@ -106,5 +106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2cd6bdc15d8e174390e7a056c77246b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxPrefab: {fileID: 8138877078587113290, guid: 564aaa841c9411f4790b9dd27af76f83,
+  boxPrefab: {fileID: 6290277863664138562, guid: 564aaa841c9411f4790b9dd27af76f83,
     type: 3}
+  content: {fileID: 7861089421788286701, guid: e270d0aa521a3b64b9ee748300192a5e, type: 3}

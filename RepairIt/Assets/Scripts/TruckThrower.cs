@@ -21,9 +21,10 @@ public class TruckThrower : MonoBehaviour
     {
     }
 
-    public void ThrowBox(Rigidbody box)
+    public Rigidbody ThrowBox(Rigidbody box)
     {
         Rigidbody newBox = Instantiate(box, throwingPosition.position, throwingPosition.rotation);
         newBox.AddRelativeForce(force, ForceMode.Impulse);
+        return newBox;
     }
 }
