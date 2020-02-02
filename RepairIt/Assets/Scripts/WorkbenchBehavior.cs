@@ -21,7 +21,11 @@ public class WorkbenchBehavior : ObjectContainer
     // Returns if we consumed the object with our action
     protected bool TryCraft(Takable obj)
     {
-        if (obj.CompareTag("Exacto") && containedObjects.Count == 1 && containedObjects[0].TryGetComponent<DeliveryboxBehaviour>(out var deliveryBox))
+        if (containedObjects.Count != 1)
+        {
+            return false;
+        }
+        if (obj.CompareTag("Exacto") && containedObjects[0].TryGetComponent<DeliveryboxBehaviour>(out var deliveryBox))
         {
             var content = Instantiate(deliveryBox.content, depotSpot.position, depotSpot.rotation, transform);
             content.EnsurePlaced();
@@ -29,6 +33,27 @@ public class WorkbenchBehavior : ObjectContainer
             Destroy(deliveryBox.gameObject); // No more box
             return false; // We don't consume the exacto, it was only used to open the box.
         }
+        if (containedObjects[0].TryGetComponent<Repairable>(out var repairable))
+        {
+            int index = repairable.requirements.FindIndex(obj.CompareTag);
+            if (index == -1)
+            {
+                // not part of requirements
+                return false;
+            }
+            repairable.requirements.RemoveAt(index);
+            Destroy(obj.gameObject);
+            return true;
+        }
         return false;
+    }
+
+    protected override void PostPutHook()
+    {
+        if (containedObjects.Count > 1)
+        {
+            // We just crafted something, remove all but index 0
+            containedObjects.RemoveRange(1, containedObjects.Count - 1);
+        }
     }
 }

@@ -36,6 +36,7 @@ public abstract class ObjectContainer : Interactee
                 interactror.heldObject.transform.parent = transform;
                 interactror.heldObject = null;
                 OnInteractionImpl(interactror);
+                PostPutHook();
             }
         }
         else
@@ -53,4 +54,8 @@ public abstract class ObjectContainer : Interactee
     }
 
     protected virtual void OnInteractionImpl(Interactror interactror) {}
+    /// <summary>
+    /// After an object was added to the container
+    /// </summary>
+    protected virtual void PostPutHook() { }
 }
