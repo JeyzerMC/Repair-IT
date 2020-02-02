@@ -33,7 +33,7 @@ public class WorkbenchBehavior : ObjectContainer
             Destroy(deliveryBox.gameObject); // No more box
             return false; // We don't consume the exacto, it was only used to open the box.
         }
-        if (containedObjects[0].TryGetComponent<Repairable>(out var repairable))
+        if (containedObjects[0].TryGetComponent<ObjectToBeRepairedBehaviour>(out var repairable))
         {
             int index = repairable.requirements.FindIndex(obj.CompareTag);
             if (index == -1)

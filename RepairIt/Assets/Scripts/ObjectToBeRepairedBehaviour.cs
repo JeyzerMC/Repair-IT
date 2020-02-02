@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Takable))]
 public class ObjectToBeRepairedBehaviour : MonoBehaviour, Analyzable
 {
+    [System.NonSerialized]
+    public Takable takable;
+
+    public List<string> requirements;
     private Interactror analyzedBy;
+
 
     // Update is called once per frame
     //void Update()

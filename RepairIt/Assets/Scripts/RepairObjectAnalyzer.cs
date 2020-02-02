@@ -64,7 +64,7 @@ public class RepairObjectAnalyzer : ObjectContainer
 
     private string GetRecipe(Takable lastObj)
     {
-        if(!lastObj.TryGetComponent<Repairable>(out var repairable))
+        if(!lastObj.TryGetComponent<ObjectToBeRepairedBehaviour>(out var repairable))
         {
             return "Not repairable!\n";
         }

@@ -11,9 +11,9 @@ public class Dropoff : ObjectContainer
     Animator characterAnimator = null;
 
     [SerializeField]
-    Repairable characterComputer = null;
+    ObjectToBeRepairedBehaviour characterComputer = null;
 
-    Repairable computer = null;
+    ObjectToBeRepairedBehaviour computer = null;
 
     private bool _orderAwaiting;
 
