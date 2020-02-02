@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class TimerManager : MonoBehaviour
 {
-
     public int timeLimit;
 
     private float startTime;
@@ -35,7 +32,7 @@ public class TimerManager : MonoBehaviour
 
     void UpdateTimer()
     {
-        var remainingTime = (int) Mathf.Round(timeLimit - Time.time - startTime);
+        var remainingTime = (int) Mathf.Round(timeLimit - Time.time + startTime);
 
         if (remainingTime == 0 && endGame != null)
         {
@@ -54,5 +51,10 @@ public class TimerManager : MonoBehaviour
         playing = true;
         if (endGame != null)
             endGame.SetActive(false);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
