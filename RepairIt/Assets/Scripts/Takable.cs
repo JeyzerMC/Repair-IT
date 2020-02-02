@@ -18,6 +18,7 @@ public class Takable : Interactee
         {
             Debug.Log("I got picked up!");
             transform.position = interactror.Hands.position;
+            transform.rotation = interactror.Hands.rotation;
         }
 
         transform.parent = isPickedUp ? interactror.Hands : null;
