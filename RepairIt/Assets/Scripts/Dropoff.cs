@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dropoff : MonoBehaviour
+public class Dropoff : ObjectContainer
 {
     [SerializeField]
     Transform itemSpawnPosition = null;
@@ -11,9 +11,9 @@ public class Dropoff : MonoBehaviour
     Animator characterAnimator = null;
 
     [SerializeField]
-    GameObject characterComputer = null;
+    Takable characterComputer = null;
 
-    GameObject computer = null;
+    Takable computer = null;
 
     private bool _orderAwaiting;
 
@@ -47,7 +47,10 @@ public class Dropoff : MonoBehaviour
         _orderAwaiting = true;
         characterAnimator.SetTrigger("New Order");
         yield return new WaitForSeconds(1);
-        computer = Instantiate(characterComputer, itemSpawnPosition.position, itemSpawnPosition.rotation);
+        computer = Instantiate(characterComputer, itemSpawnPosition.position, itemSpawnPosition.rotation, transform);
+        // TODO: Generate random requirements
+        containedObjects.Add(computer);
+        computer.EnsurePlaced();
     }
 
     public void MakeCustomerLeave()
@@ -81,5 +84,15 @@ public class Dropoff : MonoBehaviour
     public bool IsOrderWaiting()
     {
         return _orderAwaiting;
+    }
+
+    protected override bool TryAddObject(Takable gameObject, Interactror interactror)
+    {
+        // Verify if this is the correct script
+        if (gameObject == computer)
+        {
+            return true;
+        }
+        return false;
     }
 }
