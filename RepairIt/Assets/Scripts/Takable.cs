@@ -18,15 +18,28 @@ public class Takable : Interactee
         {
             Debug.Log("I got picked up!");
             transform.position = interactror.Hands.position;
+            transform.rotation = interactror.Hands.rotation;
         }
 
         transform.parent = isPickedUp ? interactror.Hands : null;
         interactror.heldObject = isPickedUp ? this : null;
 
+        UpdateComponentStatus();
+    }
+
+    public void EnsurePlaced()
+    {
+        isPickedUp = true;
+        UpdateComponentStatus();
+    }
+
+    void UpdateComponentStatus()
+    {
         // TODO: indstead of resetting, set to previous state
-        if (TryGetComponent<Collider>(out var collider))
+        var colliders = GetComponents<Collider>();
+        foreach (Collider c in colliders)
         {
-            collider.enabled = !isPickedUp;
+            c.enabled = !isPickedUp;
         }
         if (TryGetComponent<Rigidbody>(out var rigidbody))
         {
