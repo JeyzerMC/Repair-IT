@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OrderStation : MonoBehaviour, Interactee
+public class OrderStation : Interactee
 {
     [SerializeField]
     Rigidbody boxPrefab = null;
@@ -15,10 +15,9 @@ public class OrderStation : MonoBehaviour, Interactee
         _truckThrower = GameObject.FindObjectOfType<TruckThrower>();
     }
 
-    bool Interactee.OnInteraction(Interactror interactror)
+    public override void OnInteraction(Interactror interactror)
     {
         Debug.Log("Bruh");
         _truckThrower.ThrowBox(boxPrefab);
-        return false;
     }
 }
