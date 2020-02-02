@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class RepairObjectAnalyzer : ObjectContainer
 {
@@ -9,7 +9,13 @@ public class RepairObjectAnalyzer : ObjectContainer
     Transform depotSpot;
 
     [SerializeField]
-    public float AnalyzeTime = 10f;
+    public float AnalyzeTime = 2f;
+
+    [SerializeField]
+    public Canvas RecipeResult;
+
+    [SerializeField]
+    public Font TextFont;
 
     private float currentTime = 0f;
     private bool AnalyzeFinished = false;
@@ -17,6 +23,7 @@ public class RepairObjectAnalyzer : ObjectContainer
 
     private ProgressBar progressBar;
     private GameObject progressionUI;
+
 
     void Start()
     {
@@ -36,6 +43,16 @@ public class RepairObjectAnalyzer : ObjectContainer
                 AnalyzeFinished = true;
                 currentTime = 0;
                 containedObjects[containedObjects.Count - 1].GetComponent<Analyzable>().OnAnalyzeFinished();
+                var text = RecipeResult.gameObject.AddComponent<Text>();
+                text.text = "Analyze finished!";
+                text.resizeTextForBestFit = true;
+                text.verticalOverflow = VerticalWrapMode.Truncate;
+                text.horizontalOverflow = HorizontalWrapMode.Wrap;
+                text.font = TextFont;
+                text.alignByGeometry = true;
+                text.material = TextFont.material;
+                text.alignment = TextAnchor.LowerCenter;
+                text.color = new Color(1, 0, 0.31f);
             }
 
             progressBar.Progress = currentTime / AnalyzeTime;
@@ -51,7 +68,7 @@ public class RepairObjectAnalyzer : ObjectContainer
             return false;
         }
 
-        if(containedObjects.Count == 1)
+        if (containedObjects.Count == 1)
         {
             Debug.Log("There is already an object in the Analyzer!");
             return false;
@@ -68,7 +85,7 @@ public class RepairObjectAnalyzer : ObjectContainer
 
     protected override void OnInteractionImpl(Interactror interactror)
     {
-        if(currentTime > 0 && !AnalyzeFinished)
+        if (currentTime > 0 && !AnalyzeFinished)
         {
             Debug.LogError("CANCELING TIMER!");
             currentTime = 0;
@@ -76,9 +93,10 @@ public class RepairObjectAnalyzer : ObjectContainer
             interactror.heldObject.GetComponent<Analyzable>().OnAnalyzeCancelled();
         }
 
-        if(!ContainsObject)
+        if (!ContainsObject)
         {
             progressionUI.SetActive(false);
+            Destroy(RecipeResult.GetComponent<Text>());
         }
         AnalyzeFinished = false;
     }
