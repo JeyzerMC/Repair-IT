@@ -49,8 +49,9 @@ public class Dropoff : ObjectContainer
         yield return new WaitForSeconds(1);
         computer = Instantiate(characterComputer, itemSpawnPosition.position, itemSpawnPosition.rotation, transform);
         // TODO: Generate random requirements
-        containedObjects.Add(computer.takable);
-        computer.takable.EnsurePlaced();
+        var takable = computer.GetComponent<Takable>();
+        containedObjects.Add(takable);
+        takable.EnsurePlaced();
     }
 
     public void MakeCustomerLeave()

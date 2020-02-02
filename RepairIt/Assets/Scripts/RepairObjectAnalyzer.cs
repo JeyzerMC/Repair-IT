@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 
 public class RepairObjectAnalyzer : ObjectContainer
 {
@@ -30,7 +31,7 @@ public class RepairObjectAnalyzer : ObjectContainer
         progressionUI = transform.Find("ProgressionUI").gameObject;
         progressionUI.SetActive(false);
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -44,22 +45,30 @@ public class RepairObjectAnalyzer : ObjectContainer
                 var LastObj = containedObjects[containedObjects.Count - 1];
                 LastObj.GetComponent<Analyzable>().OnAnalyzeFinished();
 
-                var text = RecipeResult.gameObject.AddComponent<Text>();
-                text.text = "Analyze finished: \n" + GetRecipe(LastObj);
-                
-                text.resizeTextForBestFit = true;
-                text.verticalOverflow = VerticalWrapMode.Truncate;
-                text.horizontalOverflow = HorizontalWrapMode.Wrap;
-                text.font = TextFont;
-                text.alignByGeometry = true;
-                text.material = TextFont.material;
-                text.alignment = TextAnchor.LowerCenter;
-                text.color = new Color(1, 0, 0.31f);
+                AddFinalText(LastObj);
             }
 
             progressBar.Progress = currentTime / AnalyzeTime;
             Debug.Log(currentTime + " --> " + currentTime / AnalyzeTime);
         }
+    }
+
+    private void AddFinalText(Takable lastObj)
+    {
+        var text = RecipeResult.gameObject.AddComponent<Text>();
+        text.text = "Analyze finished: \n" + GetRecipe(lastObj);
+
+        text.resizeTextForBestFit = true;
+        text.verticalOverflow = VerticalWrapMode.Truncate;
+        text.horizontalOverflow = HorizontalWrapMode.Wrap;
+        text.font = TextFont;
+        text.alignByGeometry = true;
+        text.material = TextFont.material;
+        text.alignment = TextAnchor.LowerCenter;
+        text.color = new Color(1, 0, 0.31f);
+        Material updatedMaterial = new Material(text.materialForRendering);
+        updatedMaterial.SetInt("unity_GUIZTestMode", (int)UnityEngine.Rendering.CompareFunction.Always);
+        text.material = updatedMaterial;
     }
 
     private string GetRecipe(Takable lastObj)
@@ -75,7 +84,7 @@ public class RepairObjectAnalyzer : ObjectContainer
             result += req.Count() +"x " + req.Key + "\n";
         }
 
-        return result;
+        return result + "\n";
     }
 
     protected override bool TryAddObject(Takable gameObject, Interactror interactor)

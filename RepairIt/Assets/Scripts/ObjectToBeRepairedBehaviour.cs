@@ -22,6 +22,11 @@ public class ObjectToBeRepairedBehaviour : MonoBehaviour, Analyzable
     //    }
     //}
 
+    void Start()
+    {
+        takable = GetComponent<Takable>();
+    }
+
     public void OnAnalyze(RepairObjectAnalyzer analyzer, Interactror interactror)
     {
         analyzedBy = interactror;
