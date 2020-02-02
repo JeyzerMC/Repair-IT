@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8138877078587113291}
   - component: {fileID: 8138877078587113290}
   - component: {fileID: 6290277863664138562}
+  - component: {fileID: 3961939637349619600}
   m_Layer: 0
   m_Name: DeliveryBox
   m_TagString: Untagged
@@ -63,6 +64,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6290277863664138562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8138877078587113289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ba65de6f64d71044b2a71c074d750e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3961939637349619600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8138877078587113289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 553a8778cfda85448a2803de950995ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &334599429317739138
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -153,15 +178,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 334599429317739138}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6290277863664138562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8138877078587113289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ba65de6f64d71044b2a71c074d750e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class RepairObjectAnalyzer : ObjectContainer
 {
-    
-
+    [SerializeField]
+    Transform depotSpot;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +18,7 @@ public class RepairObjectAnalyzer : ObjectContainer
         
     }
 
-    protected override bool TryAddObject(GameObject gameObject)
+    protected override bool TryAddObject(Takable gameObject)
     {
         if(!gameObject.TryGetComponent<Analyzable>(out var analyzable))
         {
@@ -26,25 +26,15 @@ public class RepairObjectAnalyzer : ObjectContainer
             return false;
         }
 
-        // He becomes our Child
-        gameObject.transform.parent = transform;
-
         analyzable.OnAnalyze(this);
+        gameObject.transform.position = depotSpot.position;
+        gameObject.transform.rotation = depotSpot.rotation;
 
         return true;
     }
 
-    public override bool OnInteraction(Interactror interactror)
+    protected override void OnInteractionImpl(Interactror interactror)
     {
-        // We don't have any object
-        if(containedObjects.Count == 0)
-        {
-            return false;
-        }
-
-        // Give the object to the interactor
-        interactror.InteractWith(containedObjects[0]);
-
-        return false;
+        // TODO: Launch processing timer
     }
 }

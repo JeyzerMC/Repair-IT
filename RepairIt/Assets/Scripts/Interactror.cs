@@ -9,8 +9,10 @@ public class Interactror : MonoBehaviour
     public const float MAX_RAYCAST_DISTANCE = 1.2f;
 
     private PlayerInput input;
-    private GameObject heldObject = null;
-    private Transform Hands;
+    [NonSerialized]
+    public Takable heldObject = null;
+    [NonSerialized]
+    public Transform Hands;
 
     public float minWhiskerAngle = 65;
     public float maxWhiskerAngle = 90;
@@ -25,6 +27,10 @@ public class Interactror : MonoBehaviour
     {
         input = GetComponent<PlayerInput>();
         Hands = transform.Find("Hands");
+        if (Hands == null)
+        {
+            Debug.LogError("Interactor doesn't have \"Hands\"");
+        }
         _anim = GetComponentInChildren<Animator>();
     }
 
@@ -48,67 +54,37 @@ public class Interactror : MonoBehaviour
 
     void TryInteract()
     {
-        Debug.Log("Trying to interact");
-        bool foundContainer = false;
-        GameObject foundInteractee = null;
-
         var hits = RaycastWhiskers(false, Hands.position,
             Quaternion.AngleAxis(minWhiskerAngle, Hands.right) * Hands.forward * MAX_RAYCAST_DISTANCE,
             Quaternion.AngleAxis(maxWhiskerAngle, Hands.right) * Hands.forward * MAX_RAYCAST_DISTANCE,
             whiskerNumber);
+        Debug.Log($"{hits.Count()} Hits!");
+
+        Interactee target = null;
 
         foreach (var hit in hits)
         {
             Debug.Log("Testing hit at distance: " + hit.distance);
             var collider = hit.collider;
-            if (collider.TryGetComponent<Interactee>(out var interactee))
+            if (IsHoldingObject && collider.TryGetComponent<ObjectContainer>(out var container))
             {
-                Debug.Log("FOUND INTERACTEE!");
-                if (IsHoldingObject && collider.TryGetComponent<ObjectContainer>(out var container))
-                {
-                    Debug.Log("INTERACTING WITH CONTAINER!!!");
-                    if (container.PutObject(heldObject))
-                    {
-                        heldObject = null;
-                    }
-                    foundContainer = true;
-                    break;
-                }
-
-                if (foundInteractee == null)
-                {
-                    foundInteractee = collider.gameObject;
-                }
+                target = container;
+                break;
+            }
+            else if (collider.TryGetComponent<Interactee>(out var interactee))
+            {
+                target = interactee;
+                break;
             }
         }
 
-        if (!IsHoldingObject && !foundContainer && foundInteractee != null)
+        if (target != null)
         {
-            Debug.Log("Didn't find container, interacting with the interactee!");
-            InteractWith(foundInteractee);
-            return;
+            target.OnInteraction(this);
         }
-
-        if (IsHoldingObject)
+        else if (IsHoldingObject)
         {
-            InteractWith(heldObject);
-        }
-    }
-
-    public void InteractWith(GameObject gameObject)
-    {
-        if (!gameObject.TryGetComponent<Interactee>(out var interactee))
-        {
-            return;
-        }
-
-        if (interactee.OnInteraction(this))
-        {
-            heldObject = gameObject;
-        }
-        else
-        {
-            heldObject = null;
+            heldObject.OnInteraction(this);
         }
     }
 
@@ -144,7 +120,7 @@ public class Interactror : MonoBehaviour
             return x.transform == y.transform;
         }
 
-        public int GetHashCode( RaycastHit obj)
+        public int GetHashCode(RaycastHit obj)
         {
             return obj.transform.GetHashCode();
         }
