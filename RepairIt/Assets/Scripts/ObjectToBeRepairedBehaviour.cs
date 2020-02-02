@@ -4,35 +4,37 @@ using UnityEngine;
 
 public class ObjectToBeRepairedBehaviour : MonoBehaviour, Analyzable
 {
-    private Vector3 analyzedByInitialPosition;
-    private Quaternion analyzedByInitialRotation;
     private Interactror analyzedBy;
-    private RepairObjectAnalyzer analyzer;
 
     // Update is called once per frame
-    void Update()
-    {
-        if(analyzedBy != null)
-        {
-            analyzedBy.transform.position = analyzedByInitialPosition;
-            analyzedBy.transform.rotation = analyzedByInitialRotation;
-        }
-    }
+    //void Update()
+    //{
+    //    if(analyzedBy != null)
+    //    {
+    //        analyzedBy.transform.position = analyzedByInitialPosition;
+    //        analyzedBy.transform.rotation = analyzedByInitialRotation;
+    //    }
+    //}
+
     public void OnAnalyze(RepairObjectAnalyzer analyzer, Interactror interactror)
     {
-        this.analyzer = analyzer;
         analyzedBy = interactror;
-        analyzedByInitialPosition = analyzedBy.transform.position;
-        analyzedByInitialRotation = analyzedBy.transform.rotation;
+        interactror.GetComponent<Character>().Freezed = true;
     }
 
     public void OnAnalyzeFinished()
     {
-        analyzedBy = null;
+        UnfreezePlayer();
     }
 
     public void OnAnalyzeCancelled()
     {
+        UnfreezePlayer();
+    }
+
+    private void UnfreezePlayer()
+    {
+        analyzedBy.GetComponent<Character>().Freezed = false;
         analyzedBy = null;
     }
 }
