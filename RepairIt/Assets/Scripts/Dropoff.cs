@@ -11,9 +11,9 @@ public class Dropoff : ObjectContainer
     Animator characterAnimator = null;
 
     [SerializeField]
-    Repairable characterComputer = null;
+    ObjectToBeRepairedBehaviour characterComputer = null;
 
-    Repairable computer = null;
+    ObjectToBeRepairedBehaviour computer = null;
 
     private bool _orderAwaiting;
 
@@ -49,8 +49,9 @@ public class Dropoff : ObjectContainer
         yield return new WaitForSeconds(1);
         computer = Instantiate(characterComputer, itemSpawnPosition.position, itemSpawnPosition.rotation, transform);
         // TODO: Generate random requirements
-        containedObjects.Add(computer.takable);
-        computer.takable.EnsurePlaced();
+        var takable = computer.GetComponent<Takable>();
+        containedObjects.Add(takable);
+        takable.EnsurePlaced();
     }
 
     public void MakeCustomerLeave()
