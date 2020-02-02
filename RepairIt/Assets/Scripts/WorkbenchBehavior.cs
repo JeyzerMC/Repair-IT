@@ -8,7 +8,7 @@ public class WorkbenchBehavior : ObjectContainer
     [SerializeField]
     Transform depotSpot;
 
-    protected override bool TryAddObject(Takable gameObject)
+    protected override bool TryAddObject(Takable gameObject, Interactror interactror)
     {
         if (containedObjects.Count != 0) {
             return TryCraft(gameObject);
