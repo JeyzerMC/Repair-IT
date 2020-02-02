@@ -11,9 +11,9 @@ public class Dropoff : ObjectContainer
     Animator characterAnimator = null;
 
     [SerializeField]
-    Takable characterComputer = null;
+    Repairable characterComputer = null;
 
-    Takable computer = null;
+    Repairable computer = null;
 
     private bool _orderAwaiting;
 
@@ -49,8 +49,8 @@ public class Dropoff : ObjectContainer
         yield return new WaitForSeconds(1);
         computer = Instantiate(characterComputer, itemSpawnPosition.position, itemSpawnPosition.rotation, transform);
         // TODO: Generate random requirements
-        containedObjects.Add(computer);
-        computer.EnsurePlaced();
+        containedObjects.Add(computer.takable);
+        computer.takable.EnsurePlaced();
     }
 
     public void MakeCustomerLeave()
@@ -89,10 +89,22 @@ public class Dropoff : ObjectContainer
     protected override bool TryAddObject(Takable gameObject, Interactror interactror)
     {
         // Verify if this is the correct script
-        if (gameObject == computer)
+        // In this case, it the the clien't computer and are all the requirements met
+        if (gameObject == computer.takable && computer.requirements.Count == 0)
         {
+            Destroy(computer.gameObject);
+            MakeCustomerLeave();
             return true;
         }
         return false;
+    }
+
+    protected override void PostPutHook()
+    {
+        if (containedObjects.Count == 1 && computer.requirements.Count == 0)
+        {
+            // We just gived the computer to the client, he takes it away
+            containedObjects.Clear();
+        }
     }
 }

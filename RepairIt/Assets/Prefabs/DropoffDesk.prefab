@@ -239,5 +239,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSpawnPosition: {fileID: 2589958013655062724}
   characterAnimator: {fileID: 2589958014146305751}
-  characterComputer: {fileID: 4219250164984701645, guid: 1ac48ba982d5bf34fb4626d187a5c931,
+  characterComputer: {fileID: 8640100735583738412, guid: 1ac48ba982d5bf34fb4626d187a5c931,
     type: 3}
