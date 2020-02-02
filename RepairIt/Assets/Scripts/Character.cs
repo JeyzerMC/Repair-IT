@@ -20,6 +20,10 @@ public class Character : MonoBehaviour
     private bool _freezed = false;
     public bool Freezed { get { return _freezed; } set { _freezed = value; if (_freezed) { _currentSpeed = 0; } } }
 
+    [SerializeField]
+    Transform spawn;
+    bool active = false;
+
     private PlayerInput _input;
 
     private CharacterController _controller;
@@ -49,6 +53,20 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!active && spawn != null)
+        {
+            bool moved = _input.GetPlayerButtonDown("Fire1");
+            moved = moved || _input.GetPlayerButtonDown("Boost");
+            moved = moved || _input.GetPlayerAxis("Horizontal") != 0;
+            moved = moved || _input.GetPlayerAxis("Vertical") != 0;
+            if (moved)
+            {
+                gameObject.transform.position = spawn.transform.position;
+                active = true;
+            }
+            return;
+        }
+
         if (Freezed) return;
 
         if (_input.GetPlayerButton("Boost") && CanBoost())

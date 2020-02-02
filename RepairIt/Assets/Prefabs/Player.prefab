@@ -95,6 +95,7 @@ MonoBehaviour:
   boostCooldown: 2
   boostDuration: 0.5
   pushPower: 2
+  spawn: {fileID: 0}
 --- !u!114 &4126856918614235078
 MonoBehaviour:
   m_ObjectHideFlags: 0
