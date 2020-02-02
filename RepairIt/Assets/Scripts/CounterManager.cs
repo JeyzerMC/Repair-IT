@@ -64,7 +64,7 @@ public class CounterManager : MonoBehaviour
         List<string> requirements = new List<string>();
         int difficulty = 4;
         int numberOfRequirements = Random.Range(1, difficulty);
-        string[] possibilities = { "Ram", "Cpu" };
+        string[] possibilities = { "Ram", "Cpu", "Psu", "Fan", "Wire" };
         for (int i = 0; i < numberOfRequirements; ++i)
         {
             requirements.Add(possibilities[Random.Range(0, possibilities.Length)]);
